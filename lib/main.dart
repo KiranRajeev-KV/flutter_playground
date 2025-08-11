@@ -14,8 +14,8 @@ class _MainAppState extends State<MainApp> {
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = <Widget>[
-    ClickCounter(),
-    Center(child: Text('List View Page')), // Placeholder for your list view page
+    const ClickCounter(),
+    const ListViewPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -29,7 +29,7 @@ class _MainAppState extends State<MainApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Click Counter App'),
+          title: const Text('Click Counter App'),
         ),
         body: Center(
           child: _pages[_selectedIndex],
@@ -49,6 +49,26 @@ class _MainAppState extends State<MainApp> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class ListViewPage extends StatelessWidget {
+  const ListViewPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final items = List<String>.generate(20, (i) => 'Item ${i + 1}');
+    return ListView.separated(
+      padding: const EdgeInsets.all(16),
+      itemCount: items.length,
+      separatorBuilder: (context, index) => const Divider(),
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: const Icon(Icons.label),
+          title: Text(items[index]),
+        );
+      },
     );
   }
 }
