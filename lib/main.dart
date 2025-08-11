@@ -3,16 +3,50 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(const MainApp());
 }
-
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
   @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  int _selectedIndex = 0;
+
+  static final List<Widget> _pages = <Widget>[
+    ClickCounter(),
+    Center(child: Text('List View Page')), // Placeholder for your list view page
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          title: Text('Click Counter App'),
+        ),
         body: Center(
-          child: ClickCounter(),
+          child: _pages[_selectedIndex],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.touch_app),
+              label: 'Counter',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list),
+              label: 'List',
+            ),
+          ],
         ),
       ),
     );
